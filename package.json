@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev":"clear & ts-node main.ts"
+    "dev": "clear & ts-node main.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.3.1"
   },
   "devDependencies": {
     "@types/node": "^20.11.30"

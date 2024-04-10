@@ -11,12 +11,8 @@ export function filterCoordinatesBasedOnAngle(coordinates: coordinateType[]) {
       (coordinates[i + 1].latitude - coordinates[i].latitude) /
       (coordinates[i + 1].longitude - coordinates[i].longitude);
     const angle = Math.atan(slope) * (180 / Math.PI);
-    console.log(angle);
 
-    if (
-      prevAngle === null ||
-      Math.abs(angle - prevAngle) > threshold
-    ) {
+    if (prevAngle === null || Math.abs(angle - prevAngle) > threshold) {
       result.push(coordinates[i]);
     }
 
