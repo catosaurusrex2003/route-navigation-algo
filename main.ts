@@ -5,6 +5,7 @@ import { filterCoordinatesBasedOnAngle } from "./logic/filterCoordinatesBasedOnA
 import { filterCoordinatesBasedOnSlope } from "./logic/filterCoordinatesBasedOnSlope";
 import { getBoundingBoxArray } from "./logic/getBoundingBoxes";
 import "dotenv/config";
+import { queryPotholesInBoundingBoxArray } from "./workers/queryDatabase";
 
 mongoose.connect(
   process.env.MONGOURI as string,
@@ -14,17 +15,26 @@ mongoose.connect(
   } as mongoose.ConnectOptions
 );
 
-console.log(`original array length : ${coordinates.length}`);
+(async () => {
+  console.time("main");
 
-const filteredCoordinates = filterCoordinatesBasedOnAngle(coordinates);
-console.log(`filtered arrayy length : ${filteredCoordinates.length}`);
-console.log(filteredCoordinates);
+  console.log(`original array length : ${coordinates.length}`);
 
-const boundingBoxArray = getBoundingBoxArray(filteredCoordinates);
-console.log(`Bounding Box array is `, boundingBoxArray);
-console.log(boundingBoxArray);
+  const filteredCoordinates = filterCoordinatesBasedOnAngle(coordinates);
+  console.log(`filtered arrayy length : ${filteredCoordinates.length}`);
+  //   console.log(filteredCoordinates);
 
-// const meow1 = makeDesmosString(coordinates);
-// console.log(meow1, "\n\n\n\n\n\n\n");
-// const meow2 = makeDesmosString(filteredCoordinates);
-// console.log(meow2);
+  const boundingBoxArray = getBoundingBoxArray(filteredCoordinates);
+  console.log(`Bounding Box array is `, boundingBoxArray);
+  //   console.log(boundingBoxArray);
+
+  const queryResult = await queryPotholesInBoundingBoxArray(boundingBoxArray);
+  console.log(queryResult);
+
+  // const meow1 = makeDesmosString(coordinates);
+  // console.log(meow1, "\n\n\n\n\n\n\n");
+  // const meow2 = makeDesmosString(filteredCoordinates);
+  // console.log(meow2);
+
+  console.timeEnd("main");
+})();

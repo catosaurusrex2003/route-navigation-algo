@@ -1,7 +1,9 @@
 import { Location } from "../models/potholeModel";
 import { boundingBox } from "../types";
 
-const queryPotholesInBoundingBoxArray = (boundingBoxArray: boundingBox[]) => {
+export const queryPotholesInBoundingBoxArray = async (
+  boundingBoxArray: boundingBox[]
+) => {
   const query = {
     $or: boundingBoxArray.map((box) => ({
       location: {
@@ -15,11 +17,10 @@ const queryPotholesInBoundingBoxArray = (boundingBoxArray: boundingBox[]) => {
     })),
   };
   // Execute the query to find potholes within the specified boxes
-  Location.find(query)
-    .then((result) => {
-      console.log("Query result:", result);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+  try {
+    const result = await Location.find(query);
+    return result;
+  } catch (error) {
+    console.log(`ERROR while querying database: ${error}`);
+  }
 };
