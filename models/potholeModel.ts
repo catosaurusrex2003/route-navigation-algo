@@ -14,7 +14,7 @@ const LocationSchema = new Schema({
 
 LocationSchema.index({ location: "2dsphere" });
 
-export const Location = mongoose.model("Location", LocationSchema);
+export const Location = mongoose.model("coordinate", LocationSchema);
 
 // // Define the bounds for multiple boxes
 // const boxes = [
