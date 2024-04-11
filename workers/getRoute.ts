@@ -1,6 +1,6 @@
 import "dotenv/config";
 
-async function getRoute(origin: string, destination: string) {
+export async function getRoute(origin: string, destination: string) {
   // origin and destination can either be "Andheri station, Mumbai" or "12.2116445,12,2116445"
   const apiKey = process.env.GOOGLE_MAPS_APIKEY;
   const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&alternatives=true&key=${apiKey}`;
@@ -14,7 +14,6 @@ async function getRoute(origin: string, destination: string) {
       if (data?.error_message) {
         console.error(data.error_message);
       }
-      console.log(data);
       return;
     }
 
@@ -30,16 +29,20 @@ async function getRoute(origin: string, destination: string) {
         waypoints: route.waypoint_order,
       };
     });
-    console.log({
-      polyline,
-      waypoints,
-      alternateRoutes,
+    const allRoutes = data.routes.map((route: any) => {
+      return {
+        polyline: route.overview_polyline.points,
+        waypoints: route.waypoint_order,
+      };
     });
+
+    // THE ROUTE AT INDEX [0] IN "allRoutes" IS THE OPTIMAL ROUTE AS PER GMAP
 
     return {
       polyline,
       waypoints,
       alternateRoutes,
+      allRoutes,
     };
   } catch (error) {
     console.error("Failed to fetch route data:", error);
