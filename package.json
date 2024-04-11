@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "clear & ts-node main.ts"
+    "dev": "ts-node main.ts",
+    "getRoute": "clear & ts-node workers/getRoute.ts",
+    "pol": "clear & ts-node workers/decodePolyline.ts"
   },
   "author": "",
   "license": "ISC",

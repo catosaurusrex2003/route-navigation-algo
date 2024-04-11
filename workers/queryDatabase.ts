@@ -9,13 +9,20 @@ export const queryPotholesInBoundingBoxArray = async (
       location: {
         $geoWithin: {
           $box: [
-            [box.longitudeMin, box.latitudeMin],
-            [box.longitudeMax, box.latitudeMax],
+            [
+              Math.min(box.longitudeMin, box.longitudeMax),
+              Math.min(box.latitudeMin, box.latitudeMax),
+            ],
+            [
+              Math.max(box.longitudeMin, box.longitudeMax),
+              Math.max(box.latitudeMin, box.latitudeMax),
+            ],
           ],
         },
       },
     })),
   };
+  console.log(query);
   // Execute the query to find potholes within the specified boxes
   try {
     const result = await Location.find(query);

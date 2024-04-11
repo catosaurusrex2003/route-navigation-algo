@@ -30,6 +30,11 @@ async function getRoute(origin: string, destination: string) {
         waypoints: route.waypoint_order,
       };
     });
+    console.log({
+      polyline,
+      waypoints,
+      alternateRoutes,
+    });
 
     return {
       polyline,
@@ -40,3 +45,8 @@ async function getRoute(origin: string, destination: string) {
     console.error("Failed to fetch route data:", error);
   }
 }
+
+getRoute(
+  "Hatkeshwar Temple, GCC Club Road, Shanti Vidya Nagari, Phase 3, Gaurav Sankalp, Mira Road East, Mira Bhayandar, Maharashtra, India",
+  "Dara's Dhaba, National Highway 8, Kashimira, Mira Road East, Mira Bhayandar, Maharashtra, India"
+);
